@@ -1,19 +1,25 @@
-apiVersion: apps/v1
-kind: Deployment # kind means type of Resource
+apiVersion: apps/v1   # Kubernetes API version used for Deployment resource
+
+kind: Deployment      # kind = type of Kubernetes resource (here we are creating a Deployment)
+
 metadata:
-  name: todo-ui
-spec:
-  replicas: 2
-  selector:
+  name: todo-ui       # name of the Deployment object
+
+spec:                 # desired state of the Deployment
+  replicas: 2         # Kubernetes will ensure 2 Pods are always running
+
+  selector:           # defines which Pods this Deployment manages
     matchLabels:
-      app: todo-ui
-  template:
+      app: todo-ui    # Deployment will manage Pods with label app=todo-ui
+
+  template:           # blueprint used to create Pods
     metadata:
       labels:
-        app: todo-ui
-    spec:
-      containers:
-      - name: todo-ui
-        image: avishekacr.azurecr.io/todo-ui:v1
+        app: todo-ui  # label assigned to the Pods (must match selector)
+
+    spec:             # specification of the Pod
+      containers:     # list of containers inside the Pod
+      - name: todo-ui # container name
+        image: avishekacr.azurecr.io/todo-ui:v1  # container image from Azure Container Registry
         ports:
-        - containerPort: 80
+        - containerPort: 80  # application inside the container listens on port 80
